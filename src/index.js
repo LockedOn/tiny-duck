@@ -17,13 +17,15 @@ export default function TinyDuck(...args) {
     return TinyDuck.apply(this, [''].concat(args));
   }
 
+  const namespace = (ns.slice(-1) === '/' || ns === '')?ns:`${ns}/`;
+
   return args.splice(1).map(duck => Object.keys(duck).reduce((d, key) => {
     if (key === 'initialState') {
       return d;
     }
 
     const obj = duck[key];
-    const type = `${ns}${key}`;
+    const type = `${namespace}${key}`;
 
     if (Object.prototype.toString.call(obj) === '[object Function]') {
       return mergeDucks(d, {

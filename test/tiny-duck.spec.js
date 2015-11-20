@@ -1,7 +1,7 @@
 import expect from 'expect';
 import TinyDuck from '../src/index';
 
-const {reducer, actions, initialState} = TinyDuck('ns/', {
+const {reducer, actions, initialState} = TinyDuck('ns', {
   initialState: {test1:false},
   ONE: (state, action) => ({...state, ...action, test1:true})
 }, {
@@ -20,7 +20,7 @@ const {reducer, actions, initialState} = TinyDuck('ns/', {
 });
 
 describe('composition', () => {
-  it('merge initialState with nesting preserved', () => {
+  it('Merge initialState with nesting preserved', () => {
     expect(initialState).toEqual({
       test1: false, 
       test2: false, 
@@ -28,13 +28,17 @@ describe('composition', () => {
       sub2: {test4: false}
     });
   });
-  it('merge actions with nesting preserved + sub namespace', () => {
+  it('Merge actions with nesting preserved + sub namespace', () => {
     expect(actions).toEqual({
       ONE: 'ns/ONE', 
       sub: {ONE: 'ns/sub/ONE'}, 
       sub2: {ONE: '/ONE'}, 
       TWO: 'ns/TWO'
     });
+  });
+  it('Add tailing ns where required', () => {
+    const part = {ONE: (state, action) => {}};
+    expect(TinyDuck('ns', part).actions).toEqual(TinyDuck('ns/', part).actions);
   });
 });
 
@@ -55,7 +59,7 @@ describe('dispatch', () => {
   dispatch(actions.TWO, null);
   dispatch(null, null);
 
-  it('reducer processes all actions', () => {
+  it('`reducer` processed all actions + all actions correct', () => {
     expect(history).toEqual([ { test1: true,
     sub: { test3: false },
     sub2: { test4: false },
