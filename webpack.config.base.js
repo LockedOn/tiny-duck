@@ -7,7 +7,7 @@ module.exports = {
     ]
   },
   output: {
-    library: 'Redux',
+    library: 'TinyDuck',
     libraryTarget: 'umd'
   },
   resolve: {
