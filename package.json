@@ -45,8 +45,6 @@
     }
   ],
   "npmName": "tiny-duck",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lockedon/tiny-duck.git"
@@ -59,7 +57,7 @@
     "check": "npm run lint && npm run test",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test",
-    "postversion": "git push && git push --tags && npm run clean && npm run docs:publish",
+    "postversion": "git push && git push --tags && npm run clean",
     "prepublish": "npm run clean && npm run build",
     "preversion": "npm run clean && npm run check",
     "test": "mocha --compilers js:babel/register --recursive",
