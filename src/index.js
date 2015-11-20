@@ -37,10 +37,10 @@ export default function TinyDuck(...args) {
     // Poetically Duck Typed
     if (obj.reducer && obj.reducers && obj.actions && obj.initialState) {
       const newNs = (act) => {
-      	if (act.substring(0, 1) === "/") {
-      		return act;
-      	}
-      	return `${type}/${act}`;
+        if (act.substring(0, 1) === "/") {
+          return act;
+        }
+        return `${type}/${act}`;
       };
 
       const importReducers = Object.keys(obj.reducers).reduce((a, r) => ({

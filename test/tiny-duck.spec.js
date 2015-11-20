@@ -10,7 +10,7 @@ const {reducer, actions, initialState} = TinyDuck('ns', {
     ONE: (state, action) => ({...state, test3: true})
   })
 }, {
-  sub2: TinyDuck("/",{
+  sub2: TinyDuck("/", {
     initialState: {test4: false},
     ONE: (state, action) => ({...state, test4: true})
   })
@@ -89,7 +89,7 @@ describe('dispatch', () => {
     sub2: { test4: true },
     test2: false,
     wow: false,
-    type: 'ns/ONE' } ,
+    type: 'ns/ONE' },
   { test1: true,
     sub: { test3: true },
     sub2: { test4: true },
