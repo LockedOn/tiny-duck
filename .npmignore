@@ -1,0 +1,7 @@
+.gitignore
+.eslintrc
+.eslintignore
+.travis.yml
+test
+node_modules
+webpack.config*
