@@ -15,6 +15,11 @@ const {reducer, actions, initialState} = TinyDuck('ns', {
     ONE: (state, action) => ({...state, test4: true})
   })
 }, {
+  sub3: TinyDuck("/", {
+    initialState: {test5: false},
+    ONE: (state, action) => ({...state, test5: true})
+  })
+}, {
   initialState: {test2:false},
   TWO: (state, action) => state
 });
@@ -25,7 +30,8 @@ describe('composition', () => {
       test1: false, 
       test2: false, 
       sub: {test3: false}, 
-      sub2: {test4: false}
+      sub2: {test4: false}, 
+      sub3: {test5: false}
     });
   });
   it('Merge actions with nesting preserved + sub namespace', () => {
@@ -33,6 +39,7 @@ describe('composition', () => {
       ONE: 'ns/ONE', 
       sub: {ONE: 'ns/sub/ONE'}, 
       sub2: {ONE: '/ONE'}, 
+      sub3: {ONE: '/ONE'}, 
       TWO: 'ns/TWO'
     });
   });
@@ -63,38 +70,54 @@ describe('dispatch', () => {
     expect(history).toEqual([ { test1: true,
     sub: { test3: false },
     sub2: { test4: false },
+    sub3: { test5: false },
     test2: false,
     wow: true,
     type: 'ns/ONE' },
   { test1: true,
     sub: { test3: false },
     sub2: { test4: false },
+    sub3: { test5: false },
     test2: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
     sub: { test3: true },
     sub2: { test4: false },
+    sub3: { test5: false },
     test2: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
     sub: { test3: true },
     sub2: { test4: true },
+    sub3: { test5: true },
     test2: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
     sub: { test3: true },
     sub2: { test4: true },
+    sub3: { test5: true },
     test2: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
     sub: { test3: true },
     sub2: { test4: true },
+    sub3: { test5: true },
     test2: false,
     wow: false,
     type: 'ns/ONE' } ]);
+  });
+
+  it('Both actions with the absolute name are called in different namespace', () => {
+    expect(reducer(undefined, {type: actions.sub2.ONE})).toEqual({ 
+      test1: false,
+      sub: { test3: false },
+      sub2: { test4: true },
+      sub3: { test5: true },
+      test2: false,
+    });
   });
 });

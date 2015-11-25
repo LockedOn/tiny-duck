@@ -1,12 +1,26 @@
 const mergeDucks = (...args) =>
   args.reduce((a = {}, b = {}) => {
     const initialState = {...a.initialState, ...b.initialState};
-    const reducers = {...a.reducers, ...b.reducers};
+
     const actions = {...a.actions, ...b.actions};
+
+    // call all actions defined with the same name in the order they are defined.
+    const reducers = Object.keys(b.reducers || {}).reduce((reds, bkey) => {
+      const ared = reds[bkey];
+      const bred = b.reducers[bkey];
+      return {
+        ...reds,
+        [bkey]: (ared && ((state, action) => {
+          return bred(ared(state, action), action);
+        }) || bred)
+      };
+    }, a.reducers || {});
+
     const reducer = (state = initialState, action) => {
       const func = reducers[action.type];
       return func && func(state, action) || state;
     };
+
     return {initialState, reducers, actions, reducer};
   }, {});
 
