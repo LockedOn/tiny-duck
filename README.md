@@ -1,4 +1,4 @@
-![TinyDuck](https://github.com/LockedOn/tiny-duck/blob/master/TinyDuck_Logo.png =350x)
+<img alt="TinyDuck" src="https://github.com/LockedOn/tiny-duck/blob/master/TinyDuck_Logo.png" width="350">
 
 # Tiny Duck
 
