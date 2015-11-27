@@ -55,6 +55,7 @@
     "build:lib": "babel src --out-dir lib",
     "build:umd": "webpack src/index.js dist/tiny-duck.js --config webpack.config.development.js",
     "build:umd:min": "webpack src/index.js dist/tiny-duck.min.js --config webpack.config.production.js",
+    "example": "webpack example/example.js example/example.es5.js --config webpack.config.development.js && node example/example.es5.js",
     "check": "npm run lint && npm run test",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test",
