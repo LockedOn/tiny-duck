@@ -1,4 +1,4 @@
-<img alt="TinyDuck" src="https://github.com/LockedOn/tiny-duck/blob/master/TinyDuck_Logo.png" width="250">
+<img alt="TinyDuck" src="https://github.com/LockedOn/tiny-duck/blob/master/TinyDuck_Logo.png" width="200">
 
 # Tiny Duck
 
