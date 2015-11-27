@@ -61,7 +61,7 @@ const {reducer, actions} = TinyDuck(counter);
 
 ```javascript
 const {reducer, actions} = TinyDuck(counter, {
-    RESET: (state, action) => {counter:0}
+    RESET: (state, action) => ({counter:0})
 });
 
 // actions => {UP: 'UP', DOWN: 'DOWN', RESET: 'RESET'}
