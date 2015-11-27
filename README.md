@@ -10,7 +10,7 @@ Tiny Duck is a small library that allows you to define small, reusable collectio
 
 Tiny Duck gives you high code reuse and testabilty for your redux reducers.
 
-Tiny Duck was inspired from the pattern of [erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) where you bundler all of your actions, action types and reducers in the one module.
+Tiny Duck was inspired from the pattern of [erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) where you bundle all of your actions, action types and reducers in the one module.
 
 ### Getting Started
 
