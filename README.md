@@ -1,3 +1,5 @@
+![TinyDuck](https://github.com/LockedOn/tiny-duck/blob/master/TinyDuck_Logo.png =350x)
+
 # Tiny Duck
 
 Composable redux reducers
