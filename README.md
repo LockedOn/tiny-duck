@@ -157,7 +157,7 @@ newState => {
 */
 ``` 
 
-*WARNING:* Absolute namespaces are a double edge sword. You need to be very careful to only use them. 
+*WARNING:* Absolute namespaces are a double edge sword. You need to be very careful when using them. 
 
 ### License
 
