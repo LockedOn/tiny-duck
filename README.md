@@ -4,7 +4,7 @@
 
 Composable redux reducers
 
-[![Build Status](https://travis-ci.org/LockedOn/tiny-duck.svg?branch=master)](https://travis-ci.org/LockedOn/tiny-duck)
+[![Build Status](https://travis-ci.org/LockedOn/tiny-duck.svg?branch=master)](https://travis-ci.org/LockedOn/tiny-duck) [![npm version](https://badge.fury.io/js/tiny-duck.svg)](https://badge.fury.io/js/tiny-duck)
 
 Tiny Duck is a small library that allows you to define small, reusable collections of reducer actions and compose them together. 
 
