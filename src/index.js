@@ -40,55 +40,61 @@ export default function TinyDuck(...args) {
   const namespace = (ns.slice(-1) === '/' || ns === '')?ns:`${ns}/`;
 
   // Allow many arity and merge resulting TinyDucks
-  return args.splice(1).map(duck => Object.keys(duck).reduce((d, key) => {
-    if (key === 'initialState') {
-      return d;
+  return args.splice(1).map(duck => {
+    // If passing in an existing TinyDuck pass through for later merge.
+    if (duck.reducer && duck.reducers && duck.actions && duck.initialState) {
+      return duck;
     }
+    return Object.keys(duck).reduce((d, key) => {
+      if (key === 'initialState') {
+        return d;
+      }
 
-    const obj = duck[key];
-    const type = `${namespace}${key}`;
+      const obj = duck[key];
+      const type = `${namespace}${key}`;
 
-    // Create new duck action 
-    if (Object.prototype.toString.call(obj) === '[object Function]') {
-      return mergeDucks(d, {
-        reducers: {[type]: obj},
-        actions: {[key]: type},
-      });
-    }
+      // Create new duck action 
+      if (Object.prototype.toString.call(obj) === '[object Function]') {
+        return mergeDucks(d, {
+          reducers: {[type]: obj},
+          actions: {[key]: type},
+        });
+      }
 
-    // Import sub duck if Poetically Duck Typed
-    if (obj.reducer && obj.reducers && obj.actions && obj.initialState) {
+      // Import sub duck if Poetically Duck Typed
+      if (obj.reducer && obj.reducers && obj.actions && obj.initialState) {
 
-      // Add parent namespace where not an abosolute action
-      const newNs = (act) => {
-        if (act.substring(0, 1) === "/") {
-          return act;
-        }
-        return `${type}/${act}`;
-      };
+        // Add parent namespace where not an abosolute action
+        const newNs = (act) => {
+          if (act.substring(0, 1) === "/") {
+            return act;
+          }
+          return `${type}/${act}`;
+        };
 
-      // Wrap imported reducers to subset state
-      const importReducers = Object.keys(obj.reducers).reduce((a, r) => ({
-        ...a,
-        [newNs(r)]: (state, action) => ({
-          ...state,
-          [key]: obj.reducers[r](state[key], action),
-        }),
-      }), {});
+        // Wrap imported reducers to subset state
+        const importReducers = Object.keys(obj.reducers).reduce((a, r) => ({
+          ...a,
+          [newNs(r)]: (state, action) => ({
+            ...state,
+            [key]: obj.reducers[r](state[key], action),
+          }),
+        }), {});
 
-      // Compose actions in tree matching duck composition
-      const importActions = Object.keys(obj.actions).reduce((a, r) => ({
-        ...a,
-        [r]: newNs(obj.actions[r]),
-      }), {});
+        // Compose actions in tree matching duck composition
+        const importActions = Object.keys(obj.actions).reduce((a, r) => ({
+          ...a,
+          [r]: newNs(obj.actions[r]),
+        }), {});
 
-      return mergeDucks(d, {
-        initialState: {[key]: obj.initialState},
-        reducers: importReducers,
-        actions: {[key]: importActions},
-      });
-    }
+        return mergeDucks(d, {
+          initialState: {[key]: obj.initialState},
+          reducers: importReducers,
+          actions: {[key]: importActions},
+        });
+      }
 
-    throw new Error('TinyDuck action handlers must be a function or a TinyDuck!');
-  }, {initialState: (duck.initialState || {})})).reduce(mergeDucks, {});
+      throw new Error('TinyDuck action handlers must be a function or a TinyDuck!');
+    }, {initialState: (duck.initialState || {})});
+  }).reduce(mergeDucks, {});
 }

@@ -125,7 +125,7 @@ newState => {
 
 Absolute namespaces can be used to have an action be dispatched to many different action handlers operating on different parts of your redux state.
 
-This is useful if you want one action to impact multiple parts of your state.
+This is useful if you want one action to impact multiple parts of your state. e.g. server events (via web sockets etc) or LOGOUT event needing many parts of state to be reset.
 
 ```javascript
 const {reducer, actions, initialState} = TinyDuck({
@@ -158,6 +158,8 @@ newState => {
 }
 */
 ``` 
+
+*NOTE:* The output of `TinyDuck` can also be passed as an argument directly to `TinyDuck`. This allows you to have actions with mixed namespace opperating on the same subset of state.
 
 *WARNING:* Absolute namespaces are a double edge sword. You need to be very careful when using them. 
 

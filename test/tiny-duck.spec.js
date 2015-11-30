@@ -22,13 +22,18 @@ const {reducer, actions, initialState} = TinyDuck('ns', {
 }, {
   initialState: {test2:false},
   TWO: (state, action) => state
-});
+},
+TinyDuck("/", {
+  initialState: {top:false},
+  TOP: (state, action) => ({...state, top:true})
+}));
 
 describe('composition', () => {
   it('Merge initialState with nesting preserved', () => {
     expect(initialState).toEqual({
       test1: false, 
       test2: false, 
+      top: false, 
       sub: {test3: false}, 
       sub2: {test4: false}, 
       sub3: {test5: false}
@@ -37,6 +42,7 @@ describe('composition', () => {
   it('Merge actions with nesting preserved + sub namespace', () => {
     expect(actions).toEqual({
       ONE: 'ns/ONE', 
+      TOP: '/TOP',
       sub: {ONE: 'ns/sub/ONE'}, 
       sub2: {ONE: '/ONE'}, 
       sub3: {ONE: '/ONE'}, 
@@ -64,6 +70,7 @@ describe('dispatch', () => {
   dispatch(actions.sub.ONE, {});
   dispatch(actions.sub2.ONE, {});
   dispatch(actions.TWO, null);
+  dispatch(actions.TOP, null);
   dispatch(null, null);
 
   it('`reducer` processed all actions + all actions correct', () => {
@@ -72,6 +79,7 @@ describe('dispatch', () => {
     sub2: { test4: false },
     sub3: { test5: false },
     test2: false,
+    top: false,
     wow: true,
     type: 'ns/ONE' },
   { test1: true,
@@ -79,6 +87,7 @@ describe('dispatch', () => {
     sub2: { test4: false },
     sub3: { test5: false },
     test2: false,
+    top: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
@@ -86,6 +95,7 @@ describe('dispatch', () => {
     sub2: { test4: false },
     sub3: { test5: false },
     test2: false,
+    top: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
@@ -93,6 +103,7 @@ describe('dispatch', () => {
     sub2: { test4: true },
     sub3: { test5: true },
     test2: false,
+    top: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
@@ -100,6 +111,7 @@ describe('dispatch', () => {
     sub2: { test4: true },
     sub3: { test5: true },
     test2: false,
+    top: false,
     wow: false,
     type: 'ns/ONE' },
   { test1: true,
@@ -107,6 +119,15 @@ describe('dispatch', () => {
     sub2: { test4: true },
     sub3: { test5: true },
     test2: false,
+    top: true,
+    wow: false,
+    type: 'ns/ONE' },
+  { test1: true,
+    sub: { test3: true },
+    sub2: { test4: true },
+    sub3: { test5: true },
+    test2: false,
+    top: true,
     wow: false,
     type: 'ns/ONE' } ]);
   });
@@ -118,6 +139,7 @@ describe('dispatch', () => {
       sub2: { test4: true },
       sub3: { test5: true },
       test2: false,
+      top: false,
     });
   });
 });
