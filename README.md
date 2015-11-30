@@ -159,7 +159,7 @@ newState => {
 */
 ``` 
 
-*NOTE:* The output of `TinyDuck` can also be passed as an argument directly to `TinyDuck`. This allows you to have actions with mixed namespace opperating on the same subset of state.
+*NOTE:* The output of `TinyDuck` can also be passed as an argument directly to `TinyDuck`. This allows you to have actions with mixed namespace operating on the same subset of state.
 
 *WARNING:* Absolute namespaces are a double edge sword. You need to be very careful when using them. 
 
