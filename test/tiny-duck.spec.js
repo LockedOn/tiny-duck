@@ -70,7 +70,7 @@ describe('pluggable-initialState-merge', () => {
 
     const {initialState} = customDuck({
       initialState: {one:true}
-    },{
+    }, {
       initialState: {two:true}
     });
     

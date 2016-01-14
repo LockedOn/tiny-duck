@@ -105,7 +105,7 @@ export const makeDuck = (options) => {
         throw new Error('TinyDuck action handlers must be a function or a TinyDuck!');
       }, {initialState: (duck.initialState || {})});
     }).reduce(mergeDucks, {});
-  }
+  };
 };
 
 const TinyDuck = makeDuck();
