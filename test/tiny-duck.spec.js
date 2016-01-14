@@ -1,5 +1,6 @@
 import expect from 'expect';
 import TinyDuck from '../src/index';
+import {makeDuck} from '../src/index';
 
 const {reducer, actions, initialState} = TinyDuck('ns', {
   initialState: {test1:false},
@@ -52,6 +53,32 @@ describe('composition', () => {
   it('Add tailing ns where required', () => {
     const part = {ONE: (state, action) => {}};
     expect(TinyDuck('ns', part).actions).toEqual(TinyDuck('ns/', part).actions);
+  });
+});
+
+
+describe('pluggable-initialState-merge', () => {
+  it('Custom mergeFn used.', () => {
+
+    const mergeFn = (a, b) => {
+      return {...a, ...b, custom:true};
+    };
+
+    const customDuck = makeDuck({
+      initialStateMerge: mergeFn
+    });
+
+    const {initialState} = customDuck({
+      initialState: {one:true}
+    },{
+      initialState: {two:true}
+    });
+    
+    expect(initialState).toEqual({
+      custom: true,
+      one: true,
+      two: true
+    });
   });
 });
 
