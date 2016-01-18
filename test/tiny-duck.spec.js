@@ -142,4 +142,24 @@ describe('dispatch', () => {
       top: false,
     });
   });
+
+
+  // Thanks @sonhanguyen for finding this issue.
+  it('Recursivly wrap TinyDuck actions', () => {
+    const {actions} = TinyDuck({
+      child: TinyDuck({
+        grandChild: TinyDuck({
+          handler() {}
+        })
+      })
+    });
+
+    expect(actions).toEqual({
+      child: {
+        grandChild: {
+          handler: 'child/grandChild/handler'
+        }
+      }
+    });
+  });
 });

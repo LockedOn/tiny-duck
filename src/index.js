@@ -72,6 +72,23 @@ export default function TinyDuck(...args) {
           return `${type}/${act}`;
         };
 
+        const wrapActions = (actions) => Object.keys(actions).reduce((a, r) => {
+          const act = actions[r];
+
+          // recusively process down the action tree
+          if (Object.prototype.toString.call(act) === '[object Object]') {
+            return {
+              ...a,
+              [r]: wrapActions(act),
+            };
+          }
+
+          return {
+            ...a,
+            [r]: newNs(act),
+          };
+        }, {});
+
         // Wrap imported reducers to subset state
         const importReducers = Object.keys(obj.reducers).reduce((a, r) => ({
           ...a,
@@ -82,10 +99,7 @@ export default function TinyDuck(...args) {
         }), {});
 
         // Compose actions in tree matching duck composition
-        const importActions = Object.keys(obj.actions).reduce((a, r) => ({
-          ...a,
-          [r]: newNs(obj.actions[r]),
-        }), {});
+        const importActions = wrapActions(obj.actions);
 
         return mergeDucks(d, {
           initialState: {[key]: obj.initialState},
