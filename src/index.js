@@ -1,7 +1,14 @@
 const mergeDucks = (...args) =>
   args.reduce((a = {}, b = {}) => {
+    const [aState, bState] = [a.initialState, b.initialState];
+    
     // Directly merge initialState and actions
-    const initialState = {...a.initialState, ...b.initialState};
+    let initialState = {...aState, ...bState};
+    // if initialState of a or b is array, let the merged state be array
+    if ( Array.isArray(aState) || Array.isArray(bState) ) {
+      initialState = Object.values(initialState);
+    }
+    
     const actions = {...a.actions, ...b.actions};
 
     // Manually merge reducers

@@ -39,6 +39,25 @@ describe('composition', () => {
       sub3: {test5: false}
     });
   });
+  
+  it('Merge initialState with arrays preserved', () => {
+    let initialState = {
+      array1: [true],
+      array2: [false]
+    };
+    ({initialState} = TinyDuck({
+      initialState,
+      array1() {},
+      array2: TinyDuck({initialState: [true]}),
+      array3: TinyDuck({initialState: [true]})
+    }));
+    expect(initialState).toEqual({
+      array1: [true],
+      array2: [true],
+      array3: [true]
+    });
+  });
+  
   it('Merge actions with nesting preserved + sub namespace', () => {
     expect(actions).toEqual({
       ONE: 'ns/ONE', 
